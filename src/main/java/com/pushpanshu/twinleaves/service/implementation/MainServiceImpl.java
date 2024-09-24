@@ -1,6 +1,7 @@
 package com.pushpanshu.twinleaves.service.implementation;
 
 import com.pushpanshu.twinleaves.dto.ProductDTO;
+import com.pushpanshu.twinleaves.exception.GtinNotFoundException;
 import com.pushpanshu.twinleaves.model.Batch;
 import com.pushpanshu.twinleaves.model.Gtin;
 import com.pushpanshu.twinleaves.model.Product;
@@ -8,14 +9,18 @@ import com.pushpanshu.twinleaves.repository.BatchRepository;
 import com.pushpanshu.twinleaves.repository.GtinRepository;
 import com.pushpanshu.twinleaves.repository.ProductRepository;
 import com.pushpanshu.twinleaves.service.MainService;
-import org.springframework.http.HttpStatus;
+import com.pushpanshu.twinleaves.exception.BatchNotFoundException;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class MainServiceImpl implements MainService {
     private final ProductRepository productRepository;
     private final BatchRepository batchRepository;
@@ -30,6 +35,7 @@ public class MainServiceImpl implements MainService {
     @Override
     @Transactional
     public Product createProduct(ProductDTO productDTO) {
+        log.info("Creating product with name: {}", productDTO.getProductName());
         Product product = new Product();
         product.setProductName(productDTO.getProductName());
         product = productRepository.save(product);
@@ -51,6 +57,7 @@ public class MainServiceImpl implements MainService {
             gtin.setGtin(gtinString);
             gtinRepository.save(gtin);
         }
+        log.info("Product created with name: {}", product.getProductName());
         return product;
 
     }
@@ -59,7 +66,7 @@ public class MainServiceImpl implements MainService {
     public Gtin getProductByGtin(String gtin) {
         return gtinRepository.findGtinByGtin(gtin)
                 .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,"GTIN not found"));
+                        new GtinNotFoundException("GTIN not found"));
     }
 
     @Override
@@ -69,8 +76,11 @@ public class MainServiceImpl implements MainService {
     }
 
     @Override
-    public List<Batch> getLatestNonPositiveBatches() {
-        List<Batch> batches = batchRepository.findLatestNonPositiveBatches();
-        return batches;
+    public Batch getLatestNonPositiveBatches() {
+        Batch batch = batchRepository.findLatestNonPositiveBatch();
+        if (batch == null) {
+            throw new BatchNotFoundException("Batch not found with non-positive quantity");
+        }
+        return batch;
     }
 }

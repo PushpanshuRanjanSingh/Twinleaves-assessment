@@ -11,6 +11,6 @@ public interface MainService {
     Product createProduct(ProductDTO product);
     Gtin getProductByGtin(String gtin);
     List<Gtin> getGtinsWithPositiveQuantity();
-    List<Batch> getLatestNonPositiveBatches();
+    Batch getLatestNonPositiveBatches();
 
 }

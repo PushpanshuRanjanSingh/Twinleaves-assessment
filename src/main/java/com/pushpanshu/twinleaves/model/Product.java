@@ -1,6 +1,7 @@
 package com.pushpanshu.twinleaves.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ public class Product {
     private Long productId;
 
     @Column(nullable = false)
+    @NotBlank(message = "Product Name is mandatory")
     private String productName;
 
     @Column(nullable = false)

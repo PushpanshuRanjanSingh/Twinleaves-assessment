@@ -5,8 +5,12 @@ import com.pushpanshu.twinleaves.model.Batch;
 import com.pushpanshu.twinleaves.model.Gtin;
 import com.pushpanshu.twinleaves.model.Product;
 import com.pushpanshu.twinleaves.service.MainService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +25,7 @@ public class Controller {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO createProductDTO) {
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDTO createProductDTO) {
         Product createdProduct = service.createProduct(createProductDTO);
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
@@ -38,8 +42,8 @@ public class Controller {
     }
 
     @GetMapping("/batches/latest-non-positive")
-    public ResponseEntity<List<Batch>> getLatestNonPositiveBatches() {
-        List<Batch> batches = service.getLatestNonPositiveBatches();
+    public ResponseEntity<Batch> getLatestNonPositiveBatches() {
+        Batch batches = service.getLatestNonPositiveBatches();
         return ResponseEntity.ok(batches);
     }
 

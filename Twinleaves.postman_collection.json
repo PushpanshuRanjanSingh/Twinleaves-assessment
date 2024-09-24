@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "a843b2e7-ad6e-4dde-9135-2b8af87d3779",
+		"name": "Twinleaves",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11967337"
+	},
+	"item": [
+		{
+			"name": "Save Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productName\": \"Rocking Product\",\n  \"createdOn\": \"2024-09-22\",\n  \"batches\": [\n    {\n      \"mrp\": 500,\n      \"sp\": 450,\n      \"purchasePrice\": 400,\n      \"availableQuantity\": -999,\n      \"inwardedOn\": \"2024-09-24\"\n    }\n  ],\n  \"gtins\": [\n    \"987654321\"\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Gtin-Products By GtinId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products/gtin/3456789012345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"gtin",
+						"3456789012345"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gtin With Available Quantity Batch",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/gtins/positive-quantity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"gtins",
+						"positive-quantity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Latest Batch With Latest Inwards filter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/batches/latest-non-positive",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"batches",
+						"latest-non-positive"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
