@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MainService {
     Product createProduct(ProductDTO product);
-    Gtin getProductByGtin(String gtin);
+    List<Gtin> getProductByGtin(String gtin);
     List<Gtin> getGtinsWithPositiveQuantity();
     Batch getLatestNonPositiveBatches();
 

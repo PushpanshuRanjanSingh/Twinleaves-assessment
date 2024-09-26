@@ -63,10 +63,8 @@ public class MainServiceImpl implements MainService {
     }
 
     @Override
-    public Gtin getProductByGtin(String gtin) {
-        return gtinRepository.findGtinByGtin(gtin)
-                .orElseThrow(() ->
-                        new GtinNotFoundException("GTIN not found"));
+    public List<Gtin> getProductByGtin(String gtin) {
+        return  gtinRepository.findGtinByGtin(gtin);
     }
 
     @Override

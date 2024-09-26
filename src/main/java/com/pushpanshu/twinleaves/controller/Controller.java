@@ -30,8 +30,8 @@ public class Controller {
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
     @GetMapping("/products/gtin/{gtin}")
-    public ResponseEntity<Gtin> getProductByGtin(@PathVariable String gtin) {
-        Gtin data = service.getProductByGtin(gtin);
+    public ResponseEntity<List<Gtin>> getProductByGtin(@PathVariable String gtin) {
+        List<Gtin> data = service.getProductByGtin(gtin);
         return ResponseEntity.ok(data);
     }
 

@@ -11,5 +11,5 @@ public interface GtinRepository extends JpaRepository<Gtin, Long> {
     @Query("SELECT DISTINCT g FROM Gtin g JOIN g.product p JOIN p.batches b WHERE b.availableQuantity > 0")
     List<Gtin> findGtinsWithPositiveQuantity();
 
-    Optional<Gtin> findGtinByGtin(String gtin);
+    List<Gtin> findGtinByGtin(String gtin);
 }
